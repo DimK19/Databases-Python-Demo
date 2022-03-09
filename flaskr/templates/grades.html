@@ -1,0 +1,39 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <div class="card" id="card-container">
+                <div class="card-body" id="card">
+                {% if grades|length == 0 %}
+                    <h1 style="margin-top: 5rem;">No Grades found!</h1>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Course Name</th>
+                                    <th>Grade</th>
+                                    <th>Student ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for grade in grades %}
+                                    <tr>
+                                        <td> {{ grade.id }} </td>
+                                        <td> {{ grade.course_name }} </td>
+                                        <td> {{ grade.grade }} </td>
+                                        <td> {{ grade.student_id }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
