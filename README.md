@@ -4,12 +4,13 @@ Adapted from [Databases-Java-Demo](https://github.com/ChristosHadjichristofi/Dat
 
 ## Dependencies
 
+ - [MySQL](https://www.mysql.com/) for Windows
  - [Python](https://www.python.org/downloads/), with the additional libraries:
     - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
     - [Flask-MySQLdb](https://flask-mysqldb.readthedocs.io/en/latest/)
     - [faker](https://faker.readthedocs.io/en/master/) (optional, for data generation)
 
-(use pip3 install <module_name> to install directly, or create a virtual environment with the `venv` module)
+(use `pip3 install <module_name>` to install directly, or create a virtual environment with the `venv` module)
 
 ## What does Flask do
 
