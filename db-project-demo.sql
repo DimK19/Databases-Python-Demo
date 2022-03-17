@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `grades`;
 CREATE TABLE `grades` (
   `id` int NOT NULL,
   `course_name` varchar(45) NOT NULL,
-  `grade` int NOT NULL,
+  `grade` int NOT NULL CHECK (`grade` >= 0 AND `grade` <= 100),
   `student_id` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
@@ -54,7 +54,7 @@ CREATE TABLE `students` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `surname` varchar(45) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL CHECK (`email` LIKE '_%@_%._%'),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

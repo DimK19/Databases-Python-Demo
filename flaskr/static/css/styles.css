@@ -63,6 +63,21 @@
   font-size: 16px;
 }
 
+.btn-submit-custom {
+  background-color: var(--bs-indigo);
+  border-color: var(--bs-indigo);
+}
+
+.btn-submit-custom:hover {
+  background-color: var(--bs-indigo);
+  border-color: var(--bs-indigo);
+  opacity: 0.7;
+}
+
+.alert-custom {
+    margin-top: 0.5em;
+}
+
 /* ERROR PAGE STYLE */
 
 .main {

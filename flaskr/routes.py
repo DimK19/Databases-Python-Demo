@@ -1,12 +1,9 @@
-from flask import Flask
-from flask import render_template
-from flask import request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_mysqldb import MySQL
 from flaskr import app, db
 
 @app.route("/")
 def index():
-    print("what")
     try:
         cur = db.connection.cursor()
         cur.execute("SELECT * FROM grades, students WHERE course_name = 'DRI' AND grades.student_id = students.id ORDER BY grade DESC LIMIT 1")
@@ -20,8 +17,6 @@ def index():
         best_shooting_grade = res.get("grade")
         best_shooter = res.get("name") + " " + res.get("surname")
 
-        print(best_dribbler)
-        print(best_shooter)
         return render_template("landing.html",
                                pageTitle = "Landing Page",
                                best_dribbling_grade = best_dribbling_grade,
@@ -44,6 +39,24 @@ def getStudents():
         return render_template("students.html", students = students, pageTitle = "Students Page")
     except Exception as e:
         print(e)
+
+@app.route("/student-creation-page")
+def studentCreationPage():
+    return render_template("create_student.html", pageTitle = "Create Student")
+
+@app.route("/create-student", methods = ["POST"]) ## "GET" by default
+def createStudent():
+    newStudent = request.form
+    query = "INSERT INTO students(name, surname, email) VALUES ('{}', '{}', '{}');".format(newStudent['name'], newStudent['surname'], newStudent['email'])
+    try:
+        cur = db.connection.cursor()
+        cur.execute(query)
+        db.connection.commit()
+        cur.close()
+        flash("Student inserted successfully", "success")
+    except Exception as e: ## OperationalError
+        flash(str(e), "danger")
+    return redirect(url_for("index"))
 
 @app.route("/grades")
 def getGrades():

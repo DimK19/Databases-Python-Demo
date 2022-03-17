@@ -1,0 +1,24 @@
+{% extends "global_layout.html" %}
+{% block content %}
+<div class="container">
+    <div class="row" id="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" name="student-form" action="{{ url_for('createStudent') }}" method="POST">
+                <div class="form-group col-sm-3 mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter name">
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    <label for="surname">Surname</label>
+                    <input type="text" class="form-control" name="surname" placeholder="Enter surname">
+                </div>
+                <div class="form-group col-sm-3 mb-3">
+                    <label for="email">Email address</label>
+                    <input type="text" class="form-control" name="email" placeholder="Enter email">
+                </div>
+                <button type="submit" class="btn btn-primary btn-submit-custom">Submit</button>
+            </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}
