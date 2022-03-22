@@ -28,7 +28,7 @@ Generally, Flask allows some freedom of choice regarding the layout of the appli
  - `routes.py` currently contains all the endpoints and corresponding controllers
  - `run.py` launches the simple, built-in server and runs the app on it
 
-Run via the `flask run` command or `run.py`.
+Run via the `flask run` command (set the environment variable `FLASK_APP` to `run.py`) or directly with `run.py`.
 
 ![landing](https://user-images.githubusercontent.com/40044042/156389573-9e6c1c3a-1488-4e39-913f-96dd11091adb.png)
 
