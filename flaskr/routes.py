@@ -6,13 +6,13 @@ from flaskr import app, db
 def index():
     try:
         cur = db.connection.cursor()
-        cur.execute("SELECT * FROM grades, students WHERE course_name = 'DRI' AND grades.student_id = students.id ORDER BY grade DESC LIMIT 1")
+        cur.execute("SELECT g.grade, s.name, s.surname FROM students s INNER JOIN grades g ON g.student_id = s.id WHERE g.course_name = 'DRI' ORDER BY g.grade DESC LIMIT 1")
         column_names = [i[0] for i in cur.description]
         res = dict(zip(column_names, cur.fetchone()))
         best_dribbling_grade = res.get("grade")
         best_dribbler = res.get("name") + " " + res.get("surname")
 
-        cur.execute("SELECT * FROM grades, students WHERE course_name = 'SHO' AND grades.student_id = students.id ORDER BY grade DESC LIMIT 1")
+        cur.execute("SELECT g.grade, s.name, s.surname FROM students s INNER JOIN grades g ON g.student_id = s.id WHERE g.course_name = 'SHO' ORDER BY g.grade DESC LIMIT 1")
         res = dict(zip(column_names, cur.fetchone()))
         best_shooting_grade = res.get("grade")
         best_shooter = res.get("name") + " " + res.get("surname")
