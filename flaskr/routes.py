@@ -86,6 +86,20 @@ def getGrades():
         abort(500)
         print(e)
 
+@app.route("/grades/delete/<int:id>", methods = ["POST"])
+def deleteGrade(id):
+    updateData = request.form
+    query = f"DELETE FROM grades WHERE id = {id};"
+    try:
+        cur = db.connection.cursor()
+        cur.execute(query)
+        db.connection.commit()
+        cur.close()
+        flash("Grade deleted successfully", "success")
+    except Exception as e:
+        flash(str(e), "danger")
+    return redirect(url_for("getGrades"))
+
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly

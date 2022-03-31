@@ -1,6 +1,7 @@
 {% extends "global_layout.html" %}
 {% block content %}
 <div class="container">
+    {% include "flash_messages.html" %}
     <div class="row" id="row">
         <div class="col-md-12">
             <div class="card" id="card-container">
@@ -25,6 +26,13 @@
                                         <td> {{ grade.course_name }} </td>
                                         <td> {{ grade.grade }} </td>
                                         <td> {{ grade.student_id }} </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-id = "{{ grade.id }}" onclick = "setModalFields(this)">
+                                                <i class = "fa fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -36,4 +44,33 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete grade</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setModalFields(row) {
+        document.getElementById("modal-form").action = "/grades/delete/" + row.getAttribute("data-id");
+        document.getElementById("modal-form").method = "POST";
+    }
+</script>
 {% endblock content %}

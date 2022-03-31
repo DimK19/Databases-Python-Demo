@@ -85,41 +85,4 @@
         document.getElementById("modal-form").method = "POST";
     }
 </script>
-<!--
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="{{ url_for('static', filename = 'js/jquery.min.js') }}"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script>
-    $(document).ready(function() {
-        toastr.options = {
-            "closeButton": true,
-            "positionClass": "toast-bottom-right",
-            "preventDuplicates": false
-        };
-        /* In order to access variables sent to ejs file to script you must Parse them to string */
-        /* then to parse them back to JSON */
-        let messages = 'JSON.stringify(messages)';
-        messages = JSON.parse(messages);
-        messages.forEach(({
-            type,
-            value
-        }) => {
-            switch (type) {
-                case 'error':
-                    toastr.error(value)
-                    break;
-                case 'success':
-                    toastr.success(value)
-                    break;
-                case 'warning':
-                    toastr.warning(value)
-                    break;
-                default:
-                    toastr.info(value)
-                    break;
-            }
-        });
-    })
-</script>
--->
 {% endblock content %}
