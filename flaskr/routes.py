@@ -1,3 +1,4 @@
+import re
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
 from flaskr import app, db
@@ -45,19 +46,45 @@ def getStudents():
 def createStudent():
     if(request.method == "POST"):
         newStudent = request.form
-        query = "INSERT INTO students(name, surname, email) VALUES ('{}', '{}', '{}');".format(newStudent['name'], newStudent['surname'], newStudent['email'])
-        try:
-            cur = db.connection.cursor()
-            cur.execute(query)
-            db.connection.commit()
-            cur.close()
-            flash("Student inserted successfully", "success")
-        except Exception as e: ## OperationalError
-            flash(str(e), "danger")
-        return redirect(url_for("index"))
+        messages = validateStudent(newStudent)
+        if(not messages):
+            query = "INSERT INTO students(name, surname, email) VALUES ('{}', '{}', '{}');".format(newStudent['name'], newStudent['surname'], newStudent['email'])
+            try:
+                cur = db.connection.cursor()
+                cur.execute(query)
+                db.connection.commit()
+                cur.close()
+                flash("Student inserted successfully", "success")
+                return redirect(url_for("index"))
+            except Exception as e: ## OperationalError
+                flash(str(e), "danger")
+        else:
+            for m in messages:
+                flash(m, "danger")
 
     ## else, response for GET request
     return render_template("create_student.html", pageTitle = "Create Student")
+
+def validateStudent(student):
+    """
+    Return a list of error messages. If empty, the data inserted is valid.
+    """
+    MESSAGE_REQUIRED_NAME = "Name is a required field"
+    MESSAGE_REQUIRED_SURNAME = "Surname is a required field"
+    MESSAGE_REQUIRED_EMAIL = "Email is a required field"
+    MESSAGE_INVALID_EMAIL = "Invalid email format"
+    messages = []
+    if(not student["name"]):
+        messages.append(MESSAGE_REQUIRED_NAME)
+    if(not student["surname"]):
+        messages.append(MESSAGE_REQUIRED_SURNAME)
+    if(not student["email"]):
+        messages.append(MESSAGE_REQUIRED_EMAIL)
+    elif(not re.fullmatch(r"\w+@\w+(\.\w+)+", student["email"])):
+        ## https://docs.python.org/3/library/re.html#re.fullmatch
+        messages.append(MESSAGE_INVALID_EMAIL)
+
+    return messages
 
 @app.route("/students/update/<int:id>", methods = ["POST"])
 def updateStudent(id):
@@ -95,7 +122,7 @@ def deleteGrade(id):
         cur.execute(query)
         db.connection.commit()
         cur.close()
-        flash("Grade deleted successfully", "success")
+        flash("Grade deleted successfully", "primary")
     except Exception as e:
         flash(str(e), "danger")
     return redirect(url_for("getGrades"))

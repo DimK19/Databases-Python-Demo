@@ -1,6 +1,7 @@
 {% extends "global_layout.html" %}
 {% block content %}
 <div class="container">
+    {% include "flash_messages.html" %}
     <div class="row" id="row">
         <div class="col-md-12">
             <form class="form-horizontal" name="student-form" action="{{ url_for('createStudent') }}" method="POST">
