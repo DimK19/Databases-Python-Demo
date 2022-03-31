@@ -38,7 +38,7 @@ def getStudents():
         cur.close()
         return render_template("students.html", students = students, pageTitle = "Students Page")
     except Exception as e:
-        print(e)
+        flash(str(e), "danger")
         abort(500)
 
 @app.route("/students/create", methods = ["GET", "POST"]) ## "GET" by default
@@ -58,6 +58,20 @@ def createStudent():
 
     ## else, response for GET request
     return render_template("create_student.html", pageTitle = "Create Student")
+
+@app.route("/students/update/<int:id>", methods = ["POST"])
+def updateStudent(id):
+    updateData = request.form
+    query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'], updateData['surname'], updateData['email'], id)
+    try:
+        cur = db.connection.cursor()
+        cur.execute(query)
+        db.connection.commit()
+        cur.close()
+        flash("Student updated successfully", "success")
+    except Exception as e:
+        flash(str(e), "danger")
+    return redirect(url_for("getStudents"))
 
 @app.route("/grades")
 def getGrades():

@@ -1,18 +1,7 @@
 {% extends "global_layout.html" %}
 {% block content %}
 <div class="container" id="row-container">
-    <div class = "alert-custom col-md-12">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message | safe }}
-                    <button type = "button" class = "btn-close" data-bs-dismiss = "alert" aria-label = "Close"></button>
-                </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
+    {% include "flash_messages.html" %}
     <div class="row" id="row">
         <div class="col-md-4">
             <div class="card" id="card-container-layout">
