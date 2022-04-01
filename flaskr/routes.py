@@ -89,15 +89,20 @@ def validateStudent(student):
 @app.route("/students/update/<int:id>", methods = ["POST"])
 def updateStudent(id):
     updateData = request.form
-    query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'], updateData['surname'], updateData['email'], id)
-    try:
-        cur = db.connection.cursor()
-        cur.execute(query)
-        db.connection.commit()
-        cur.close()
-        flash("Student updated successfully", "success")
-    except Exception as e:
-        flash(str(e), "danger")
+    messages = validateStudent(updateData)
+    if(not messages):
+        query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'], updateData['surname'], updateData['email'], id)
+        try:
+            cur = db.connection.cursor()
+            cur.execute(query)
+            db.connection.commit()
+            cur.close()
+            flash("Student updated successfully", "success")
+        except Exception as e:
+            flash(str(e), "danger")
+    else:
+        for m in messages:
+            flash(m, "danger")
     return redirect(url_for("getStudents"))
 
 @app.route("/grades")
