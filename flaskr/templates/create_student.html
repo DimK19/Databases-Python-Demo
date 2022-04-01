@@ -4,20 +4,42 @@
     {% include "flash_messages.html" %}
     <div class="row" id="row">
         <div class="col-md-12">
-            <form class="form-horizontal" name="student-form" action="{{ url_for('createStudent') }}" method="POST">
+            <form class="form-horizontal" name="student-form" method="POST">
+                {{ form.hidden_tag() }}
                 <div class="form-group col-sm-3 mb-3">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter name">
+                    {{ form.name.label(class = "form-label") }}
+                    {{ form.name(class = "form-control", placeholder="Enter name") }}
+                    {% if form.name.errors %}
+                    <ul class = "errors">
+                        {% for error in form.name.errors %}
+                        <li class = "alert text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
                 <div class="form-group col-sm-3 mb-3">
-                    <label for="surname">Surname</label>
-                    <input type="text" class="form-control" name="surname" placeholder="Enter surname">
+                    {{ form.surname.label(class = "form-label") }}
+                    {{ form.surname(class = "form-control", placeholder="Enter surname") }}
+                    {% if form.surname.errors %}
+                    <ul class = "errors">
+                        {% for error in form.surname.errors %}
+                        <li class = "alert text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
                 <div class="form-group col-sm-3 mb-3">
-                    <label for="email">Email address</label>
-                    <input type="text" class="form-control" name="email" placeholder="Enter email">
+                    {{ form.email.label(class = "form-label") }}
+                    {{ form.email(class = "form-control", placeholder="Enter email") }}
+                    {% if form.email.errors %}
+                    <ul class = "errors">
+                        {% for error in form.email.errors %}
+                        <li class = "alert text-danger">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
-                <button type="submit" class="btn btn-primary btn-submit-custom">Submit</button>
+                {{ form.submit(class = "btn btn-primary btn-submit-custom") }}
             </form>
     </div>
     </div>

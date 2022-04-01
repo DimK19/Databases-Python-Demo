@@ -2,6 +2,7 @@ import re
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
 from flaskr import app, db
+from flaskr.forms import StudentForm
 
 @app.route("/")
 def index():
@@ -32,64 +33,41 @@ def index():
 @app.route("/students")
 def getStudents():
     try:
+        form = StudentForm()
         cur = db.connection.cursor()
         cur.execute("SELECT * FROM students")
         column_names = [i[0] for i in cur.description]
         students = [dict(zip(column_names, entry)) for entry in cur.fetchall()]
         cur.close()
-        return render_template("students.html", students = students, pageTitle = "Students Page")
+        return render_template("students.html", students = students, pageTitle = "Students Page", form = form)
     except Exception as e:
         flash(str(e), "danger")
         abort(500)
 
 @app.route("/students/create", methods = ["GET", "POST"]) ## "GET" by default
 def createStudent():
-    if(request.method == "POST"):
-        newStudent = request.form
-        messages = validateStudent(newStudent)
-        if(not messages):
-            query = "INSERT INTO students(name, surname, email) VALUES ('{}', '{}', '{}');".format(newStudent['name'], newStudent['surname'], newStudent['email'])
-            try:
-                cur = db.connection.cursor()
-                cur.execute(query)
-                db.connection.commit()
-                cur.close()
-                flash("Student inserted successfully", "success")
-                return redirect(url_for("index"))
-            except Exception as e: ## OperationalError
-                flash(str(e), "danger")
-        else:
-            for m in messages:
-                flash(m, "danger")
+    form = StudentForm()
+    if(request.method == "POST" and form.validate_on_submit()):
+        newStudent = form.__dict__
+        query = "INSERT INTO students(name, surname, email) VALUES ('{}', '{}', '{}');".format(newStudent['name'].data, newStudent['surname'].data, newStudent['email'].data)
+        try:
+            cur = db.connection.cursor()
+            cur.execute(query)
+            db.connection.commit()
+            cur.close()
+            flash("Student inserted successfully", "success")
+            return redirect(url_for("index"))
+        except Exception as e: ## OperationalError
+            flash(str(e), "danger")
 
     ## else, response for GET request
-    return render_template("create_student.html", pageTitle = "Create Student")
-
-def validateStudent(student):
-    """
-    Return a list of error messages. If empty, the data inserted is valid.
-    """
-    MESSAGE_REQUIRED_NAME = "Name is a required field"
-    MESSAGE_REQUIRED_SURNAME = "Surname is a required field"
-    MESSAGE_REQUIRED_EMAIL = "Email is a required field"
-    MESSAGE_INVALID_EMAIL = "Invalid email format"
-    messages = []
-    if(not student["name"]):
-        messages.append(MESSAGE_REQUIRED_NAME)
-    if(not student["surname"]):
-        messages.append(MESSAGE_REQUIRED_SURNAME)
-    if(not student["email"]):
-        messages.append(MESSAGE_REQUIRED_EMAIL)
-    elif(not re.fullmatch(r"\w+@\w+(\.\w+)+", student["email"])):
-        ## https://docs.python.org/3/library/re.html#re.fullmatch
-        messages.append(MESSAGE_INVALID_EMAIL)
-
-    return messages
+    return render_template("create_student.html", pageTitle = "Create Student", form = form)
 
 @app.route("/students/update/<int:id>", methods = ["POST"])
 def updateStudent(id):
-    updateData = request.form
-    query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'], updateData['surname'], updateData['email'], id)
+    form = StudentForm()
+    updateData = form.__dict__
+    query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'].data, updateData['surname'].data, updateData['email'].data, id)
     try:
         cur = db.connection.cursor()
         cur.execute(query)
