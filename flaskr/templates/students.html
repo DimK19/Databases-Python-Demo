@@ -70,9 +70,9 @@
                     <div style="text-align: center;">
                         <input type="text" name="id" id="id" readonly>
                         <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
-                        {{ form.name(id = "name", required = "False") }}
-                        {{ form.surname(id = "surname", required = "False") }}
-                        {{ form.email(id = "email", required = "False") }}
+                        {{ form.name(id = "name", required = False) }}
+                        {{ form.surname(id = "surname", required = False) }}
+                        {{ form.email(id = "email", required = False) }}
                     </div>
                     <div>
                         {% if form.name.errors %}
@@ -100,7 +100,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <!-- <button type="submit" form="modal-form" class="btn btn-success">Update</button> -->
                 {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
