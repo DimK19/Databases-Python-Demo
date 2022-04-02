@@ -142,6 +142,8 @@
         document.getElementById("modal-form").action = "/students/update/" + row.getAttribute("data-id");
         document.getElementById("modal-form").method = "POST";
         // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+        // commented line above would prevent the default behavior of the submit button, that is, sending the
+        // form data with a post request to the determined address and subsequently closing the pop-up
     }
 
     function setDeleteModalFields(row) {

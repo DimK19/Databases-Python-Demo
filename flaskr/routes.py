@@ -1,4 +1,3 @@
-import re
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
 from flaskr import app, db
@@ -48,6 +47,7 @@ def getStudents():
         cur.close()
         return render_template("students.html", students = students, pageTitle = "Students Page", form = form)
     except Exception as e:
+        ## if the connection to the database fails, return HTTP response 500
         flash(str(e), "danger")
         abort(500)
 

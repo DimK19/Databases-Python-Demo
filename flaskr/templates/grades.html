@@ -7,6 +7,7 @@
             <div class="card" id="card-container">
                 <div class="card-body" id="card">
                 {% if grades|length == 0 %}
+                    <!-- |length is a jinja2 filter that returns the amount of items in a sequence -->
                     <h1 style="margin-top: 5rem;">No Grades found!</h1>
                 {% else %}
                     <div class="table-responsive">

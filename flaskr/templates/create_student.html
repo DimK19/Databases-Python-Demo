@@ -5,6 +5,7 @@
     <div class="row" id="row">
         <div class="col-md-12">
             <form class="form-horizontal" name="student-form" method="POST">
+                <!-- hidden_tag returns the form's security metadata -->
                 {{ form.hidden_tag() }}
                 <div class="form-group col-sm-3 mb-3">
                     {{ form.name.label(class = "form-label") }}
