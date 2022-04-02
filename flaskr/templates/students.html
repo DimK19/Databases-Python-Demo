@@ -69,9 +69,10 @@
                     {{ form.hidden_tag() }}
                     <div style="text-align: center;">
                         <input type="text" name="id" id="id" readonly>
-                        {{ form.name(id = "name") }}
-                        {{ form.surname(id = "surname") }}
-                        {{ form.email(id = "email") }}
+                        <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.name(id = "name", required = "False") }}
+                        {{ form.surname(id = "surname", required = "False") }}
+                        {{ form.email(id = "email", required = "False") }}
                     </div>
                     <div>
                         {% if form.name.errors %}

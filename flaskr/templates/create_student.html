@@ -8,7 +8,8 @@
                 {{ form.hidden_tag() }}
                 <div class="form-group col-sm-3 mb-3">
                     {{ form.name.label(class = "form-label") }}
-                    {{ form.name(class = "form-control", placeholder="Enter name") }}
+                    <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                    {{ form.name(class = "form-control", placeholder="Enter name", required = "False") }}
                     {% if form.name.errors %}
                     <ul class = "errors">
                         {% for error in form.name.errors %}
@@ -19,7 +20,7 @@
                 </div>
                 <div class="form-group col-sm-3 mb-3">
                     {{ form.surname.label(class = "form-label") }}
-                    {{ form.surname(class = "form-control", placeholder="Enter surname") }}
+                    {{ form.surname(class = "form-control", placeholder="Enter surname", required = "False") }}
                     {% if form.surname.errors %}
                     <ul class = "errors">
                         {% for error in form.surname.errors %}
@@ -30,7 +31,7 @@
                 </div>
                 <div class="form-group col-sm-3 mb-3">
                     {{ form.email.label(class = "form-label") }}
-                    {{ form.email(class = "form-control", placeholder="Enter email") }}
+                    {{ form.email(class = "form-control", placeholder="Enter email", required = "False") }}
                     {% if form.email.errors %}
                     <ul class = "errors">
                         {% for error in form.email.errors %}
