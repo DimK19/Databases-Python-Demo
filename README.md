@@ -23,9 +23,9 @@ In order to send queries to a database from a Python program, a connection betwe
 
 ## Flask-WTForms
 
-This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. Each field of a FlaskForm class is essentially rendered as the corresponding input tag in HTML.
+This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. Each field of a `FlaskForm` class is essentially rendered as the corresponding input tag in HTML.
 
-_For the purposes of this project, simple HTML forms with custom validation by the controllers are sufficient: see [v1.0.0](https://github.com/DimK19/Databases-Python-Demo/releases/tag/v1.0.0-alpha)._
+_For the purposes of this project, simple HTML forms with custom validation by the controllers are sufficient: see [v1.0.0-alpha](https://github.com/DimK19/Databases-Python-Demo/releases/tag/v1.0.0-alpha)._
 
 ## Project Structure
 
