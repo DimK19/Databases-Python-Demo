@@ -97,6 +97,22 @@ def updateStudent(id):
                 flash(error, "danger")
     return redirect(url_for("getStudents"))
 
+@app.route("/students/delete/<int:id>", methods = ["POST"])
+def deleteStudent(id):
+    """
+    Delete student by id from database
+    """
+    query = f"DELETE FROM students WHERE id = {id};"
+    try:
+        cur = db.connection.cursor()
+        cur.execute(query)
+        db.connection.commit()
+        cur.close()
+        flash("Student deleted successfully", "primary")
+    except Exception as e:
+        flash(str(e), "danger")
+    return redirect(url_for("getStudents"))
+
 @app.route("/grades")
 def getGrades():
     """
