@@ -9,6 +9,7 @@ Adapted from [Databases-Java-Demo](https://github.com/ChristosHadjichristofi/Dat
     - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
     - [Flask-MySQLdb](https://flask-mysqldb.readthedocs.io/en/latest/)
     - [faker](https://faker.readthedocs.io/en/master/) (optional, for data generation)
+    - [Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.0.x/) and [email-validator](https://pypi.org/project/email-validator/) (optional, a more involved method of input validation)
 
 (use `pip3 install <module_name>` to install directly, or create a virtual environment with the `venv` module)
 
@@ -19,6 +20,12 @@ Flask is a micro web framework used to create web applications. It uses [Jinja](
 ## How to Execute SQL Queries with Python and Flask
 
 In order to send queries to a database from a Python program, a connection between it and the databases' server must be established first. That is accomplished by a cursor object from the `Flask-MySQLdb` library, and using the appropriate methods (`execute`, `commit`).
+
+## Flask-WTForms
+
+This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. Each field of a FlaskForm class is essentially rendered as the corresponding input tag in HTML.
+
+_For the purposes of this project, simple HTML forms with custom validation by the controllers are sufficient: see [v1.0.0](https://github.com/DimK19/Databases-Python-Demo/releases/tag/v1.0.0-alpha)._
 
 ## Project Structure
 
