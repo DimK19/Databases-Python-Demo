@@ -18,6 +18,7 @@
                                     <th>Surname</th>
                                     <th>Email</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,6 +37,13 @@
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                         </td>
+                                        <td>
+                                            <button style = "all: unset; cursor: pointer;" type = "button"
+                                            data-bs-toggle = "modal" data-bs-target = "#deleteModal"
+                                            data-id = "{{ student.id }}" onclick = "setDeleteModalFields(this)">
+                                                <i class = "fa fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -48,9 +56,9 @@
     </div>
 </div>
 
+<!-- Edit modal -->
 <div id="editModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -58,22 +66,72 @@
             </div>
             <div class="modal-body">
                 <form id="modal-form">
+                    {{ form.hidden_tag() }}
                     <div style="text-align: center;">
                         <input type="text" name="id" id="id" readonly>
-                        <input type="text" name="name" id="name">
-                        <input type="text" name="surname" id="surname">
-                        <input type="text" name="email" id="email">
+                        <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
+                        {{ form.name(id = "name", required = False) }}
+                        {{ form.surname(id = "surname", required = False) }}
+                        {{ form.email(id = "email", required = False) }}
+                    </div>
+                    <div>
+                        {% if form.name.errors %}
+                        <ul class = "errors">
+                            {% for error in form.name.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.surname.errors %}
+                        <ul class = "errors">
+                            {% for error in form.surname.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if form.email.errors %}
+                        <ul class = "errors">
+                            {% for error in form.email.errors %}
+                            <li class = "alert text-danger">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="modal-form" class="btn btn-success">Update</button>
+                {{ form.submit(class = "btn btn btn-success", form = "modal-form", value = "Update") }}
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
 
     </div>
 </div>
+
+<!-- Delete modal -->
+<div class = "modal fade" id="deleteModal">
+    <div class = "modal-dialog">
+        <div class = "modal-content">
+            <div class = "modal-header">
+                <h5 class = "modal-title" id = "deleteModalLabel">Delete student</h5>
+                <button type = "button" class = "btn-close" data-bs-dismiss = "modal" aria-label = "Close"></button>
+            </div>
+            <div class = "modal-body">
+                All associated grades will be deleted too. Are you sure?
+            </div>
+            <div class = "modal-footer">
+                <button type = "button" class = "btn btn-secondary" data-bs-dismiss = "modal">Close</button>
+                <form id = "delete-modal-form">
+                    <input type = "submit" class = "btn btn-danger" value = "Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
 
 <script>
     function setModalFields(row) {
@@ -83,6 +141,12 @@
         document.getElementById("email").value = row.getAttribute("data-email");
         document.getElementById("modal-form").action = "/students/update/" + row.getAttribute("data-id");
         document.getElementById("modal-form").method = "POST";
+        // document.getElementById("submit").addEventListener("click", (e) => {e.preventDefault();});
+    }
+
+    function setDeleteModalFields(row) {
+        document.getElementById("delete-modal-form").action = "/students/delete/" + row.getAttribute("data-id");
+        document.getElementById("delete-modal-form").method = "POST";
     }
 </script>
 {% endblock content %}
