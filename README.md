@@ -1,4 +1,4 @@
-# Databases-Python-Demo 
+# Databases-Python-Demo
 
 Adapted from [Databases-Java-Demo](https://github.com/ChristosHadjichristofi/Databases-Java-Demo) and [Databases-NodeJS-Demo](https://github.com/ChristosHadjichristofi/Databases-NodeJS-Demo), originally by [Christos Hadjichristofi](https://github.com/ChristosHadjichristofi).
 
@@ -29,7 +29,7 @@ _For the purposes of this project, simple HTML forms with custom validation by t
 
 ## Project Structure
 
-Generally, Flask allows some freedom of choice regarding the layout of the application's components. This demo follows the structure recommended by the [official documentation](https://flask.palletsprojects.com/en/2.0.x/tutorial/layout/), whereby a package, conventionally named "`flaskr`", contains the application's code and files, separated into folders for each category (models, controllers, HTML templates - views, static files such as css or images).
+Generally, Flask allows some freedom of choice regarding the layout of the application's components. This demo follows the structure recommended by the [official documentation](https://flask.palletsprojects.com/en/2.0.x/tutorial/layout/), whereby a package, arbitrarily named "`dbdemo`", contains the application's code and files, separated into folders for each category (models, controllers, HTML templates - views, static files such as css or images).
 
  - `__init__.py` configures the application, including the necessary information and credentials for the database
  - `routes.py` currently contains all the endpoints and corresponding controllers

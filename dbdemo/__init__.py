@@ -18,4 +18,4 @@ app.config['WTF_CSRF_SECRET_KEY'] = 'key'
 db = MySQL(app)
 
 ## routes must be imported after the app object has been initialized
-from flaskr import routes
+from dbdemo import routes

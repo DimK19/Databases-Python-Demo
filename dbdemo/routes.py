@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
-from flaskr import app, db
-from flaskr.forms import StudentForm
+from dbdemo import app, db
+from dbdemo.forms import StudentForm
 
 @app.route("/")
 def index():
