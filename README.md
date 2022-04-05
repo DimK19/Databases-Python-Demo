@@ -11,7 +11,7 @@ Adapted from [Databases-Java-Demo](https://github.com/ChristosHadjichristofi/Dat
     - [faker](https://faker.readthedocs.io/en/master/) (optional, for data generation)
     - [Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.0.x/) and [email-validator](https://pypi.org/project/email-validator/) (optional, a more involved method of input validation)
 
-(use `pip3 install <module_name>` to install directly for the entire system, or create a virtual environment with the [`venv`](https://docs.python.org/3/library/venv.html) module)
+Use `pip3 install <package_name>` to install each individual Python package (library) directly for the entire system, or create a virtual environment with the [`venv`](https://docs.python.org/3/library/venv.html) module. The necessary packages for this app are listed in `requirements.txt` and can be installed all together via `pip install -r requirements.txt`.
 
 ## What does Flask do
 
@@ -73,8 +73,8 @@ Applications that run without `sudo` privileges often are not allowed to connect
 `mysql> GRANT ALL PRIVILEGES ON demo.* TO 'type_username'@'localhost' WITH GRANT OPTION;`
 4. Reload the grant tables to ensure that the new privileges are put into effect using:
 `FLUSH PRIVILEGES;`.
-5. Exit mySQL with `mysql> exit;`.
-7. Go to `dbdemo/__init__.py` and change the `app.config["MYSQL_USER"]` and `app.config["MYSQL_PASSWORD"] = 'root'` lines according to the username and the password you chose before.
+5. Exit MySQL with `mysql> exit;`.
+7. Go to `dbdemo/__init__.py` and change the `app.config["MYSQL_USER"]` and `app.config["MYSQL_PASSWORD"]` lines according to the username and the password you chose before.
 
 For more details read [this](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).
     
