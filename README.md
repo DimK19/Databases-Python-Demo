@@ -65,12 +65,16 @@ _The demo's toy database is created and populated by_ `db-project-demo.sql`.
 
 Applications that run without `sudo` privileges often are not allowed to connect to MySQL with the _root_ user. In order to overcome this problem, you should create a new MySQL user an grant him privileges for this demo application. Follow these steps:
 
-1. Open a terminal and precede the `mysql` command with `sudo` to invoke it with the privileges of the root Ubuntu user in order to gain access to the root MySQL user. This can be done using `sudo mysql -u root -p`.
-2. Create a new MySQL user using: `mysql> CREATE USER 'type_username'@'localhost' IDENTIFIED BY 'type_your_password_here_123';`
-3. Grant the user root privileges on the application's database `mysql> GRANT ALL PRIVILEGES ON demo.* TO 'type_username'@'localhost' WITH GRANT OPTION;`
-4. Reload the grant tables to ensure that the new privileges are put into effect using `FLUSH PRIVILEGES;`.
+1. Open a terminal and precede the `mysql` command with `sudo` to invoke it with the privileges of the root Ubuntu user in order to gain access to the root MySQL user. This can be done using  
+`sudo mysql -u root -p`.
+2. Create a new MySQL user using:  
+`mysql> CREATE USER 'type_username'@'localhost' IDENTIFIED BY 'type_your_password_here_123';`
+3. Grant the user root privileges on the application's database using:  
+`mysql> GRANT ALL PRIVILEGES ON demo.* TO 'type_username'@'localhost' WITH GRANT OPTION;`
+4. Reload the grant tables to ensure that the new privileges are put into effect using:
+`FLUSH PRIVILEGES;`.
 5. Exit mySQL with `mysql> exit;`.
-6. Go to `dbdemo/__init__.py` and change the `app.config["MYSQL_USER"]` and `app.config["MYSQL_PASSWORD"] = 'root'` lines according to the username and the password you chose before.
+7. Go to `dbdemo/__init__.py` and change the `app.config["MYSQL_USER"]` and `app.config["MYSQL_PASSWORD"] = 'root'` lines according to the username and the password you chose before.
 
 For more details read [this](https://www.digitalocean.com/community/tutorials/how-to-create-a-new-user-and-grant-permissions-in-mysql).
     
