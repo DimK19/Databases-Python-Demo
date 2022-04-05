@@ -56,6 +56,8 @@ _The demo's toy database is created and populated by_ `db-project-demo.sql`.
     ```
     Import the credentials in `__init__.py` by replacing the `app.config` commands with:
     ```python
+    import json
+    ## ...
     app.config.from_file("config.json", load = json.load)
     ```
 
