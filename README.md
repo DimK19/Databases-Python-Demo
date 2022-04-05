@@ -11,7 +11,7 @@ Adapted from [Databases-Java-Demo](https://github.com/ChristosHadjichristofi/Dat
     - [faker](https://faker.readthedocs.io/en/master/) (optional, for data generation)
     - [Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.0.x/) and [email-validator](https://pypi.org/project/email-validator/) (optional, a more involved method of input validation)
 
-(use `pip3 install <module_name>` to install directly, or create a virtual environment with the `venv` module)
+(use `pip3 install <module_name>` to install directly for the entire system, or create a virtual environment with the [`venv`](https://docs.python.org/3/library/venv.html) module)
 
 ## What does Flask do
 
@@ -23,7 +23,7 @@ In order to send queries to a database from a Python program, a connection betwe
 
 ## Flask-WTForms
 
-This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. Each field of a `FlaskForm` class is essentially rendered as the corresponding input tag in HTML.
+This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. It provides security features such as [CSRF protection](https://en.wikipedia.org/wiki/Cross-site_request_forgery). Each field of a `FlaskForm` class is essentially rendered as the corresponding input tag in HTML.
 
 _For the purposes of this project, simple HTML forms with custom validation by the controllers are sufficient: see [v1.0.0-alpha](https://github.com/DimK19/Databases-Python-Demo/releases/tag/v1.0.0-alpha)._
 
@@ -36,6 +36,28 @@ Generally, Flask allows some freedom of choice regarding the layout of the appli
  - `run.py` launches the simple, built-in server and runs the app on it
 
 Run via the `flask run` command (set the environment variable `FLASK_APP` to `run.py`) or directly with `run.py`.
+
+_The demo's toy database is created and populated by_ `db-project-demo.sql`.
+
+## Good Practices
+
+ 1. Never upload passwords or API keys to github. One simple way to secure your passwords is to store them in a separate file, that will be included in `.gitignore`:
+
+    _dbdemo/config.json_
+    ```json
+    {
+        "MYSQL_USER": "dbuser",
+        "MYSQL_PASSWORD": "dbpass",
+        "MYSQL_DB": "dbname",
+        "MYSQL_HOST": "localhost",
+        "SECRET_KEY": "key",
+        "WTF_CSRF_SECRET_KEY": "key"
+    }
+    ```
+    Import the credentials in `__init__.py` by replacing the `app.config` commands with:
+    ```python
+    app.config.from_file("config.json", load = json.load)
+    ```
 
 ![landing](https://user-images.githubusercontent.com/40044042/156389573-9e6c1c3a-1488-4e39-913f-96dd11091adb.png)
 
