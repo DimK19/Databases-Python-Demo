@@ -74,15 +74,15 @@ def createStudent():
     ## else, response for GET request
     return render_template("create_student.html", pageTitle = "Create Student", form = form)
 
-@app.route("/students/update/<int:id>", methods = ["POST"])
-def updateStudent(id):
+@app.route("/students/update/<int:studentID>", methods = ["POST"])
+def updateStudent(studentID):
     """
     Update a student in the database, by id
     """
     form = StudentForm()
     updateData = form.__dict__
     if(form.validate_on_submit()):
-        query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'].data, updateData['surname'].data, updateData['email'].data, id)
+        query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'].data, updateData['surname'].data, updateData['email'].data, studentID)
         try:
             cur = db.connection.cursor()
             cur.execute(query)
@@ -97,12 +97,12 @@ def updateStudent(id):
                 flash(error, "danger")
     return redirect(url_for("getStudents"))
 
-@app.route("/students/delete/<int:id>", methods = ["POST"])
-def deleteStudent(id):
+@app.route("/students/delete/<int:studentID>", methods = ["POST"])
+def deleteStudent(studentID):
     """
     Delete student by id from database
     """
-    query = f"DELETE FROM students WHERE id = {id};"
+    query = f"DELETE FROM students WHERE id = {studentID};"
     try:
         cur = db.connection.cursor()
         cur.execute(query)
@@ -129,12 +129,12 @@ def getGrades():
         abort(500)
         print(e)
 
-@app.route("/grades/delete/<int:id>", methods = ["POST"])
-def deleteGrade(id):
+@app.route("/grades/delete/<int:gradeID>", methods = ["POST"])
+def deleteGrade(gradeID):
     """
     Delete grade by id from database
     """
-    query = f"DELETE FROM grades WHERE id = {id};"
+    query = f"DELETE FROM grades WHERE id = {gradeID};"
     try:
         cur = db.connection.cursor()
         cur.execute(query)
