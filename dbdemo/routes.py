@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
-from dbdemo import app, db
+from dbdemo import app, db ## initially created by __init__.py, need to be used here
 from dbdemo.forms import StudentForm
 
 @app.route("/")

@@ -16,6 +16,12 @@ Date: 2022-03-03 14:01:37
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
+-- Create database
+-- ----------------------------
+CREATE SCHEMA demo;
+USE demo;
+
+-- ----------------------------
 -- Table structure for grades
 -- ----------------------------
 DROP TABLE IF EXISTS `grades`;
