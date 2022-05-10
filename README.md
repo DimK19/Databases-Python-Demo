@@ -2,14 +2,16 @@
 
 Adapted from [Databases-Java-Demo](https://github.com/ChristosHadjichristofi/Databases-Java-Demo) and [Databases-NodeJS-Demo](https://github.com/ChristosHadjichristofi/Databases-NodeJS-Demo), originally by [Christos Hadjichristofi](https://github.com/ChristosHadjichristofi).
 
+Implementation in PHP [here](https://github.com/cpefkianakis/Databases-PHP-Demo).
+
 ## Dependencies
 
  - [MySQL](https://www.mysql.com/) for Windows
  - [Python](https://www.python.org/downloads/), with the additional libraries:
     - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
     - [Flask-MySQLdb](https://flask-mysqldb.readthedocs.io/en/latest/)
-    - [faker](https://faker.readthedocs.io/en/master/) (optional, for data generation)
-    - [Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.0.x/) and [email-validator](https://pypi.org/project/email-validator/) (optional, a more involved method of input validation)
+    - [faker](https://faker.readthedocs.io/en/master/) (for data generation)
+    - [Flask-WTForms](https://flask-wtf.readthedocs.io/en/1.0.x/) and [email-validator](https://pypi.org/project/email-validator/) (a more involved method of input validation)
 
 Use `pip3 install <package_name>` to install each individual Python package (library) directly for the entire system, or create a virtual environment with the [`venv`](https://docs.python.org/3/library/venv.html) module. The necessary packages for this app are listed in `requirements.txt` and can be installed all together via `pip install -r requirements.txt`.
 
@@ -24,8 +26,6 @@ In order to send queries to a database from a Python program, a connection betwe
 ## Flask-WTForms
 
 This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. It provides security features such as [CSRF protection](https://en.wikipedia.org/wiki/Cross-site_request_forgery). Each field of a `FlaskForm` class is essentially rendered as the corresponding input tag in HTML.
-
-_For the purposes of this project, simple HTML forms with custom validation by the controllers are sufficient: see [v1.0.0-alpha](https://github.com/DimK19/Databases-Python-Demo/releases/tag/v1.0.0-alpha)._
 
 ## Project Structure
 
