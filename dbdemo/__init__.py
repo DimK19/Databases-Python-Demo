@@ -1,6 +1,8 @@
 ## This file is ran automatically the first time a Python program imports the package dbdemo
 from flask import Flask
 from flask_mysqldb import MySQL
+from dbdemo.student import student
+from dbdemo.grade import grade
 
 ## __name__ is the name of the module. When running directly from python, it will be 'dbdemo'
 ## Outside of this module, as in run.py, it is '__main__' by default
@@ -22,3 +24,7 @@ db = MySQL(app)
 
 ## routes must be imported after the app object has been initialized
 from dbdemo import routes
+from dbdemo.grade import routes
+from dbdemo.student import routes
+app.register_blueprint(student)
+app.register_blueprint(grade)
