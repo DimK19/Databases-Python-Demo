@@ -4,7 +4,7 @@ fake = faker.Faker()
 
 DUMMY_DATA_NUMBER = 10;
 TABLE_NAME = "students";
-TABLE_COLUMNS = ["name", "surname", "email"]
+TABLE_COLUMNS = ["first_name", "last_name", "email"]
 content = "";
 
 for _ in range(DUMMY_DATA_NUMBER):

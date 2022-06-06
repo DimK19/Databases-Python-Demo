@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, abort
 from flask_mysqldb import MySQL
 from dbdemo import app, db ## initially created by __init__.py, need to be used here
-from dbdemo.forms import StudentForm
+from dbdemo.forms import StudentForm, GradeForm
 
 @app.route("/")
 def index():
@@ -9,19 +9,19 @@ def index():
         ## create connection to database
         cur = db.connection.cursor()
         ## execute query
-        cur.execute("SELECT g.grade, s.name, s.surname FROM students s INNER JOIN grades g ON g.student_id = s.id WHERE g.course_name = 'DRI' ORDER BY g.grade DESC LIMIT 1")
+        cur.execute("SELECT g.grade, s.first_name, s.last_name FROM students s INNER JOIN grades g ON g.student_id = s.id WHERE g.course_name = 'DRI' ORDER BY g.grade DESC LIMIT 1")
         ## cursor.fetchone() does not return the column names, only the row values
         ## thus we manually create a mapping between the two, the dictionary res
         column_names = [i[0] for i in cur.description]
         res = dict(zip(column_names, cur.fetchone()))
         best_dribbling_grade = res.get("grade")
-        best_dribbler = res.get("name") + " " + res.get("surname")
+        best_dribbler = res.get("first_name") + " " + res.get("last_name")
 
-        cur.execute("SELECT g.grade, s.name, s.surname FROM students s INNER JOIN grades g ON g.student_id = s.id WHERE g.course_name = 'SHO' ORDER BY g.grade DESC LIMIT 1")
+        cur.execute("SELECT g.grade, s.first_name, s.last_name FROM students s INNER JOIN grades g ON g.student_id = s.id WHERE g.course_name = 'SHO' ORDER BY g.grade DESC LIMIT 1")
         res = dict(zip(column_names, cur.fetchone()))
         cur.close()
         best_shooting_grade = res.get("grade")
-        best_shooter = res.get("name") + " " + res.get("surname")
+        best_shooter = res.get("first_name") + " " + res.get("last_name")
 
         return render_template("landing.html",
                                pageTitle = "Landing Page",
@@ -56,11 +56,23 @@ def createStudent():
     """
     Create new student in the database
     """
-    form = StudentForm()
+    form = StudentForm() ## This is an object of a class that inherits FlaskForm
+    ## which in turn inherits Form from wtforms
+    ## https://flask-wtf.readthedocs.io/en/0.15.x/api/#flask_wtf.FlaskForm
+    ## https://wtforms.readthedocs.io/en/2.3.x/forms/#wtforms.form.Form
+    ## If no form data is specified via the formdata parameter of Form
+    ## (it isn't here) it will implicitly use flask.request.form and flask.request.files.
+    ## So when this method is called because of a GET request, the request
+    ## object's form field will not contain user input, whereas if the HTTP
+    ## request type is POST, it will implicitly retrieve the data.
+    ## https://flask-wtf.readthedocs.io/en/0.15.x/form/
+    ## Alternatively, in the case of a POST request, the data could have between
+    ## retrieved directly from the request object: request.form.get("key name")
+
     ## when the form is submitted
     if(request.method == "POST" and form.validate_on_submit()):
         newStudent = form.__dict__
-        query = "INSERT INTO students(name, surname, email) VALUES ('{}', '{}', '{}');".format(newStudent['name'].data, newStudent['surname'].data, newStudent['email'].data)
+        query = "INSERT INTO students(first_name, last_name, email) VALUES ('{}', '{}', '{}');".format(newStudent['first_name'].data, newStudent['last_name'].data, newStudent['email'].data)
         try:
             cur = db.connection.cursor()
             cur.execute(query)
@@ -79,10 +91,10 @@ def updateStudent(studentID):
     """
     Update a student in the database, by id
     """
-    form = StudentForm()
+    form = StudentForm() ## see createStudent for explanation
     updateData = form.__dict__
     if(form.validate_on_submit()):
-        query = "UPDATE students SET name = '{}', surname = '{}', email = '{}' WHERE id = {};".format(updateData['name'].data, updateData['surname'].data, updateData['email'].data, studentID)
+        query = "UPDATE students SET first_name = '{}', last_name = '{}', email = '{}' WHERE id = {};".format(updateData['first_name'].data, updateData['last_name'].data, updateData['email'].data, studentID)
         try:
             cur = db.connection.cursor()
             cur.execute(query)
@@ -144,6 +156,47 @@ def deleteGrade(gradeID):
     except Exception as e:
         flash(str(e), "danger")
     return redirect(url_for("getGrades"))
+
+@app.route("/grades/create", methods = ["GET", "POST"]) ## "GET" by default
+def createGrade():
+    """
+    Create new grade in the database
+    """
+    form  = GradeForm()
+
+    ## when the form is submitted
+    if(request.method == "POST"):
+        newGrade = form.__dict__
+
+        query = "INSERT INTO grades(course_name, grade, student_id) VALUES ('{}', '{}', '{}');".format(
+            newGrade['course_name'].data,
+            newGrade['grade'].data,
+            newGrade['student_id'].data
+        )
+
+        try:
+            cur = db.connection.cursor()
+            cur.execute(query)
+            db.connection.commit()
+            cur.close()
+            flash("Grade inserted successfully", "success")
+            return redirect(url_for("index"))
+        except Exception as e: ## OperationalError
+            flash(str(e), "danger")
+            print(str(e))
+    ## else, response for GET request
+    else:
+        try:
+            cur = db.connection.cursor()
+            cur.execute('SELECT id, CONCAT(last_name, ", ", first_name) FROM students;')
+            form.student_id.choices = list(cur.fetchall())
+            ## each tuple in the above list is in the format (id, full__name),
+            ## and will be rendered in html as an <option> of the <select>
+            ## element, with value = id and content = full_name
+            cur.close()
+            return render_template("create_grade.html", pageTitle = "Create Grade", form = form)
+        except Exception as e: ## OperationalError
+            flash(str(e), "danger")
 
 @app.errorhandler(404)
 def page_not_found(e):

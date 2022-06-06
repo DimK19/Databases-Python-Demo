@@ -14,8 +14,8 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Surname</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
                                     <th>Email</th>
                                     <th></th>
                                     <th></th>
@@ -25,13 +25,13 @@
                                 {% for student in students %}
                                     <tr>
                                         <td> {{ student.id }} </td>
-                                        <td> {{ student.name }} </td>
-                                        <td> {{ student.surname }} </td>
+                                        <td> {{ student.first_name }} </td>
+                                        <td> {{ student.last_name }} </td>
                                         <td> {{ student.email }} </td>
                                         <td>
                                             <a type="button" onclick="setModalFields(this)"
                                             data-toggle="modal" data-id="{{ student.id }}"
-                                            data-name="{{student.name}}"  data-surname= "{{student.surname}}"
+                                            data-first_name="{{student.first_name}}"  data-last_name= "{{student.last_name}}"
                                             data-email="{{student.email}}" data-bs-toggle = "modal"
                                             data-bs-target="#editModal">
                                                 <i class="fa fa-edit"></i>
@@ -70,21 +70,21 @@
                     <div style="text-align: center;">
                         <input type="text" name="id" id="id" readonly>
                         <!-- Setting required to false disables the HTML attribute and leaves input validation to the backend -->
-                        {{ form.name(id = "name", required = False) }}
-                        {{ form.surname(id = "surname", required = False) }}
+                        {{ form.first_name(id = "first_name", required = False) }}
+                        {{ form.last_name(id = "last_name", required = False) }}
                         {{ form.email(id = "email", required = False) }}
                     </div>
                     <div>
-                        {% if form.name.errors %}
+                        {% if form.first_name.errors %}
                         <ul class = "errors">
-                            {% for error in form.name.errors %}
+                            {% for error in form.first_name.errors %}
                             <li class = "alert text-danger">{{ error }}</li>
                             {% endfor %}
                         </ul>
                         {% endif %}
-                        {% if form.surname.errors %}
+                        {% if form.last_name.errors %}
                         <ul class = "errors">
-                            {% for error in form.surname.errors %}
+                            {% for error in form.last_name.errors %}
                             <li class = "alert text-danger">{{ error }}</li>
                             {% endfor %}
                         </ul>
@@ -136,8 +136,8 @@
 <script>
     function setModalFields(row) {
         document.getElementById("id").value = row.getAttribute("data-id");
-        document.getElementById("name").value = row.getAttribute("data-name");
-        document.getElementById("surname").value = row.getAttribute("data-surname");
+        document.getElementById("first_name").value = row.getAttribute("data-first_name");
+        document.getElementById("last_name").value = row.getAttribute("data-last_name");
         document.getElementById("email").value = row.getAttribute("data-email");
         document.getElementById("modal-form").action = "/students/update/" + row.getAttribute("data-id");
         document.getElementById("modal-form").method = "POST";
