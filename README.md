@@ -31,9 +31,14 @@ This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) 
 
 Generally, Flask allows some freedom of choice regarding the layout of the application's components. This demo follows the structure recommended by the [official documentation](https://flask.palletsprojects.com/en/2.0.x/tutorial/layout/), whereby a package, arbitrarily named "`dbdemo`", contains the application's code and files, separated into folders for each category (models, controllers, HTML templates - views, static files such as css or images).
 
+Additionally, it utilizes Blueprints, a Flask structure that divides the app into sub-modules. Each of those is supposed to represent an entity of the database, and contains its own __init__ file, and corresponding form and route declarations.
+
  - `__init__.py` configures the application, including the necessary information and credentials for the database
- - `routes.py` currently contains all the endpoints and corresponding controllers
+ - Each module folder contains:
+    - an `__init__` file that initializes the Blueprint
+    - a `routes.py` file with the relevant endpoints and corresponding controllers
  - `run.py` launches the simple, built-in server and runs the app on it
+ - all HTML templates are stored together in the `templates` folder, but could also be separated per Blueprint
 
 Run via the `flask run` command (set the environment variable `FLASK_APP` to `run.py`) or directly with `run.py`.
 
